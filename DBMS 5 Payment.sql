@@ -1,0 +1,76 @@
+USE TOY_STORE;
+
+CREATE TABLE Payment
+(
+    PaymentID INT PRIMARY KEY,
+    OrderID INT,
+    PaymentMode VARCHAR(20),
+    PaymentDate DATE,
+    PaymentAmount DECIMAL(10,2),
+    PaymentStatus VARCHAR(20),
+
+    FOREIGN KEY (OrderID)
+    REFERENCES Orders(OrderID)
+);
+
+INSERT INTO Payment VALUES
+(601, 401, "UPI", "2026-09-01", 500.00, "SUCCESS"),
+(602, 402, "CARD", "2026-09-01", 1100.00, "SUCCESS"),
+(603, 403, "CASH", "2026-09-02", 450.00, "FAILED"),
+(604, 404, "UPI", "2026-09-02", 400.00, "SUCCESS"),
+(605, 405, "CARD", "2026-09-03", 3200.00, "SUCCESS"),
+(606, 406, "CASH", "2026-09-03", 600.00, "SUCCESS"),
+(607, 407, "UPI", "2026-09-04", 600.00, "FAILED"),
+(608, 408, "CARD", "2026-09-04", 1050.00, "SUCCESS"),
+(609, 409, "CASH", "2026-09-05", 800.00, "SUCCESS"),
+(610, 410, "UPI", "2026-09-05", 1100.00, "SUCCESS"),
+(611, 411, "CARD", "2026-09-06", 750.00, "FAILED"),
+(612, 412, "CASH", "2026-09-06", 1200.00, "SUCCESS"),
+(613, 413, "UPI", "2026-09-07", 1300.00, "SUCCESS"),
+(614, 414, "CARD", "2026-09-07", 350.00, "SUCCESS"),
+(615, 415, "CASH", "2026-09-08", 2600.00, "FAILED"),
+(616, 416, "UPI", "2026-09-08", 900.00, "SUCCESS"),
+(617, 417, "CARD", "2026-09-09", 500.00, "SUCCESS"),
+(618, 418, "CASH", "2026-09-09", 1650.00, "SUCCESS"),
+(619, 419, "UPI", "2026-09-10", 1100.00, "FAILED"),
+(620, 420, "CARD", "2026-09-10", 1500.00, "SUCCESS");
+
+SELECT * FROM Payment;
+
+UPDATE Payment
+SET PaymentStatus = "SUCCESS"
+WHERE PaymentID = 603;
+
+SELECT * FROM Payment
+WHERE PaymentID = 603;
+
+UPDATE Payment
+SET PaymentStatus = "FAILED"
+WHERE PaymentID = 602;
+
+SELECT * FROM Payment
+WHERE PaymentID = 602;
+
+SELECT * FROM Payment
+WHERE PaymentStatus = "SUCCESS";
+
+SELECT * FROM Payment
+WHERE PaymentStatus = "FAILED";
+
+SELECT * FROM Payment
+WHERE PaymentMode = "UPI";
+
+SELECT * FROM Payment
+WHERE PaymentMode = "CARD";
+
+SELECT * FROM Payment
+WHERE PaymentMode = "CASH";
+
+SELECT PaymentMode, COUNT(*)
+FROM Payment
+GROUP BY PaymentMode;
+
+SELECT PaymentMode, SUM(PaymentAmount)
+FROM Payment
+WHERE PaymentStatus = 'SUCCESS'
+GROUP BY PaymentMode;
