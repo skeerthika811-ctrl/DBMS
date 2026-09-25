@@ -1,0 +1,102 @@
+USE TOY_STORE;
+
+CREATE TABLE Orders
+(
+    OrderID INT PRIMARY KEY,
+    CustomerName VARCHAR(100),
+    ProductQuantity INT,
+    TotalAmount DECIMAL(10,2),
+    OrderStatus VARCHAR(30)
+);
+
+INSERT INTO Orders VALUES
+(401, "ARUN", 2, 500.00, "PENDING"),
+(402, "PRIYA", 3, 1100.00, "DELIVERED"),
+(403, "RAHUL", 1, 450.00, "PENDING"),
+(404, "DIVYA", 2, 400.00, "DELIVERED"),
+(405, "KARTHIK", 4, 3200.00, "PENDING"),
+(406, "ANU", 1, 600.00, "DELIVERED"),
+(407, "VIGNESH", 2, 600.00, "PENDING"),
+(408, "MEENA", 3, 1050.00, "DELIVERED"),
+(409, "SURESH", 1, 800.00, "PENDING"),
+(410, "KAVYA", 2, 1100.00, "DELIVERED"),
+(411, "ROHIT", 3, 750.00, "PENDING"),
+(412, "BALA", 1, 1200.00, "DELIVERED"),
+(413, "KIRAN", 2, 1300.00, "PENDING"),
+(414, "PREETHI", 1, 350.00, "DELIVERED"),
+(415, "SOWMIYA", 4, 2600.00, "PENDING"),
+(416, "RAJESH", 2, 900.00, "DELIVERED"),
+(417, "EDWARD", 1, 500.00, "PENDING"),
+(418, "LAKSHMI", 3, 1650.00, "DELIVERED"),
+(419, "MANOJ", 2, 1100.00, "PENDING"),
+(420, "GOKUL", 1, 1500.00, "DELIVERED");
+
+SELECT * FROM Orders;
+
+CREATE TABLE OrderDetails
+(
+    OrderDetailID INT PRIMARY KEY,
+    OrderID INT,
+    ProductID INT,
+    Quantity INT,
+    UnitPrice DECIMAL(10,2),
+
+    FOREIGN KEY (OrderID)
+    REFERENCES Orders(OrderID),
+
+    FOREIGN KEY (ProductID)
+    REFERENCES Product(ProductID)
+);
+
+INSERT INTO OrderDetails VALUES
+(501, 401, 101, 2, 250.00),
+(502, 402, 105, 2, 550.00),
+(503, 403, 103, 1, 450.00),
+(504, 404, 107, 2, 200.00),
+(505, 405, 109, 4, 800.00),
+(506, 406, 106, 1, 600.00),
+(507, 407, 102, 2, 300.00),
+(508, 408, 104, 3, 350.00),
+(509, 409, 109, 1, 800.00),
+(510, 410, 105, 2, 550.00),
+(511, 411, 101, 3, 250.00),
+(512, 412, 111, 1, 1200.00),
+(513, 413, 106, 2, 600.00),
+(514, 414, 107, 1, 350.00),
+(515, 415, 102, 4, 300.00),
+(516, 416, 103, 2, 450.00),
+(517, 417, 110, 1, 650.00),
+(519, 419, 105, 2, 550.00),
+(520, 420, 112, 1, 1500.00);
+
+SELECT * FROM OrderDetails;
+
+UPDATE Orders
+SET OrderStatus = "DELIVERED"
+WHERE OrderID = 401;
+
+SELECT * FROM Orders
+WHERE OrderID = 401;
+
+UPDATE Orders
+SET ProductQuantity = 2
+WHERE OrderID = 403;
+
+SELECT * FROM Orders
+WHERE OrderID = 403;
+
+SELECT * FROM Orders
+WHERE OrderStatus = "PENDING";
+
+SELECT * FROM Orders
+WHERE OrderStatus = "DELIVERED";
+
+SELECT COUNT(*) FROM Orders
+GROUP BY CustomerName;
+
+SELECT SUM(TotalAmount) FROM Orders
+GROUP BY CustomerName;
+
+SELECT * FROM Orders;
+
+SELECT * FROM OrderDetails;
